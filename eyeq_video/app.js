@@ -97,7 +97,7 @@ app.use('/epg', epg);
 //Set IP and Port
 //Note set this to an internal network IP and make sure port isnt in use
 
-var ip = '192.168.1.37';
+var ip = '192.168.1.36';
 var port = 2000;
 //app.listen(port, ip);
 
