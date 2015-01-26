@@ -1,0 +1,77 @@
+
+<div id='address'>
+	<b>Your Address</b>: <span class="loader"><img src='/images/spinner.gif'/></span> <span class='addrVal'></span>
+</div>
+<div id='zipcode'>
+	<b>Your Zipcode</b>: <span class="loader"><img src='/images/spinner.gif'/></span> <span class='addrVal'></span>
+</div>
+<br>
+
+{{#each gnResponse}}
+
+	{{#if_cond this.obj_type '==' 'TVCHANNEL'}}
+		<ul class='list-inline'>
+			<li>
+				{{#if this.channel_image_url}}
+					<img src = '{{this.channel_image_url}}' class='img-thumbnail' style='background:#242424'/>
+				{{else}}
+					<img src='/images/placeholder.png' height='50' width='110'>
+				{{/if}}
+			</li>
+
+			{{#if this.channel_number}}
+			<li>{{this.channel_number}} - </li>
+			{{/if}}
+
+			<li><a href='/epg/channel/{{this.gnid}}'>{{this.channel_name}}</a> - {{this.gnid}}</li>				
+			<li><a href='/epg/tvgrid/{{this.gnid}}'>View Programs</a></li>
+		</ul>
+	{{/if_cond}}
+	
+	{{#if_cond this.obj_type '==' 'TVPROVIDER'}}
+		<ul class='list-unstyled'>
+			<li>{{this.provider_name}} - {{this.gnid}}</li>
+			<li><a href='/epg/channel/provider/{{this.gnid}}'>View Channels</a></li>
+		</ul>
+	{{/if_cond}}
+	
+	{{#if_cond this.obj_type '==' 'TVPROGRAM'}}
+		<p>{{this.title}} - {{this.gnid}}</p>
+	{{/if_cond}}
+	
+	{{#if_cond this.obj_type '==' 'TVGRID'}}
+	
+	<div class="row result-row"><h3>TV Programs</h3></div>
+		{{#each this.tv_programs}}
+		<div class="row ">
+			<div class="col-sm-2">
+				{{#if this.image_url}}
+					<img src = '{{this.image_url}}' class='img-responsive img-thumbnail'>
+				{{/if}}
+			</div>
+			<div class="col-sm-9">
+				<ul class='list-unstyled'>
+					<li><b>Title</b>: {{this.title}}</li>
+					<li><b>GNID</b>: {{this.gnid}}</li>
+				</ul>
+			</div>
+		</div>
+		{{/each}}
+		
+	<div class="row result-row"><h3>TV Airings</h3></div>
+		{{#each this.tv_airings}}
+		<div class="row ">			
+			<div class="col-sm-12">
+				<ul class='list-unstyled'>
+					<li><b>start</b>: {{this.start}}</li>
+					<li><b>end</b>: {{this.end}}</li>
+					<li><b>tv_channel_gnid</b>: {{this.tv_channel_gnid}}</li>
+					<li><b>tv_program_gnid</b>: {{this.tv_program_gnid}}</li>
+				</ul>
+			</div>
+		</div>
+		{{/each}}
+		
+	{{/if_cond}}
+
+{{/each}}

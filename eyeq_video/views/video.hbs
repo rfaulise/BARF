@@ -1,0 +1,455 @@
+
+
+{{#if_cond gnResponse.0.obj_type '!=' 'CONTRIBUTOR'}}
+{{#each gnResponse}}
+<div class="row result-row">
+	<div class="col-sm-3">
+		{{#if this.video_image_url}}
+		<img src="{{this.video_image_url}}" alt='{{this.video_image_url}}' class="img-thumbnail img-responsive">
+		{{else}}
+		<img src='/images/placeholder.png' class="img-thumbnail img-responsive ">
+		{{/if}}
+	</div>
+	<div class="col-sm-9">
+		<table class="table" id='results-table'>
+			<thead>
+				<tr>
+					{{#if_cond this.obj_type '==' 'SEASON'}}
+						<th colspan="2" class='result-head'>{{this.title}} , {{this.series.0.title}} <span style='float:right; color:#999'>{{this.obj_type}}</span></th>
+					{{else}}
+						<th colspan="2" class='result-head'>{{this.title}} <span style='float:right; color:#999'>{{this.obj_type}}</span></th>
+					{{/if_cond}}
+					
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					{{#if_cond this.obj_type '==' 'WORK'}}
+					<td>work_title</td><td><a title='Search: {{this.title}}' href='/video/work/{{this.title}}/rs/0'>{{this.title}}</a></td>
+					{{/if_cond}}
+					
+					{{#if_cond this.obj_type '==' 'SERIES'}}
+					<td>series_title</td><td><a title='Search: {{this.title}}' href='/video/series/{{this.title}}/rs/0'>{{this.title}}</a></td>
+					{{/if_cond}}
+					
+					{{#if_cond this.obj_type '==' 'SEASON'}}
+					<td>season_title</td><td>{{this.title}}</td>
+					{{/if_cond}}
+				</tr>
+				<tr>
+					{{#if_cond this.obj_type '==' 'WORK'}}
+					<td>work_gnid</td><td><a title='Fetch: {{this.gnid}}' href='/video/work/fetch/{{this.gnid}}/rs/0'>{{this.gnid}}</a></td>
+					{{/if_cond}}
+					
+					{{#if_cond this.obj_type '==' 'SERIES'}}
+					<td>series_gnid</td><td><a title='Fetch: {{this.gnid}}' href='/video/series/fetch/{{this.gnid}}/rs/0'>{{this.gnid}}</a></td>
+					{{/if_cond}}
+					
+					{{#if_cond this.obj_type '==' 'SEASON'}}
+					<td>season_gnid</td><td><a title='Fetch: {{this.gnid}}' href='/video/season/fetch/{{this.gnid}}/rs/0'>{{this.gnid}}</a></td>
+					{{/if_cond}}
+				</tr>
+				<tr>
+					<td>series</td>
+					<td>
+						{{#if this.series_count}}
+							{{#each this.series}}						
+								<a alt = 'Fetch series by gnid' href='/video/series/fetch/{{this.gnid}}/rs/0'>{{this.title}}</a>
+							{{/each}}
+						{{else}}
+							No Results
+						{{/if}}
+					</td>
+				</tr>
+				<tr>
+					<td>contributors:</td>
+					{{#if this.contributor_count}}
+					<td class='toggle-row-link'>{{this.contributor_count}} Contributors <span class='caret'></span></td>
+					{{else}}
+					<td>No Results</td>
+					{{/if}}
+				</tr>
+				<tr class='toggle-row'>
+					<td></td>
+					<td> {{#each this.contributors}}
+					<div class="media">
+						<div class="media-left">
+							{{#if this.image_url}}
+							<img class="media-object img-thumbnail" height='140' width='100' src="{{this.image_url}}" alt='{{this.image_url}}' >
+							{{else}}
+							<img src='/images/placeholder.png' height='140' width='100' class="img-thumbnail img-responsive ">
+							{{/if}}
+						</div>
+						<div class="media-body">
+							<h4 class="media-heading">{{this.name}}</h4>
+							<ul class="list-unstyled">
+								<li>
+									<b>GNID</b>: <a href='/video/contributor/fetch/{{this.gnid}}/rs/0'>{{this.gnid}}</a>
+								</li>
+								<li>
+									<b>Contribution</b>: {{this.contribution_type}}
+								</li>
+								<li>
+									<b>Character</b>: {{this.contribution_character}}
+								</li>
+							</ul>
+						</div>
+					</div> {{/each}} </td>
+				</tr>
+				
+				<tr>
+					<td>works:</td>
+					{{#if this.work_count}}
+					<td class='toggle-row-link'>{{this.work_count}} Works<span class="caret"></span></td>
+					{{else}}
+					<td>No Results</td>
+					{{/if}}
+				</tr>
+				<tr class='toggle-row'>
+					<td></td>
+					<td> {{#each this.works}}
+					<div class="media">
+						<div class="media-left">
+							{{#if this.cover_url}}
+							<img class="media-object img-thumbnail" height='140' width='100' src="{{this.cover_url}}" alt='{{this.cover_url}}' >
+							{{else}}
+							<img src='/images/placeholder.png' height='140' width='100' class="img-thumbnail img-responsive">
+							{{/if}}
+
+						</div>
+						<div class="media-body">
+							<h4 class="media-heading">{{this.title}}</h4>
+							<ul class="list-unstyled">
+								<li>
+									<b>GNID</b>: <a href='/video/work/fetch/{{this.gnid}}/rs/0'>{{this.gnid}}</a>
+								</li>
+								<li>
+									<b>Edition</b>: {{this.edition}}
+								</li>
+								<li>
+									<b>Aspect Ratio</b>: {{this.aspect_ratio}}
+								</li>								
+							</ul>
+						</div>
+					</div> {{/each}} </td>
+				</tr>
+				<tr>
+					<td>products:</td>
+					{{#if this.video_disc_count}}
+					<td class='toggle-row-link'>{{this.video_disc_count}} Products<span class="caret"></span></td>
+					{{else}}
+					<td>No Results</td>
+					{{/if}}
+				</tr>
+				<tr class='toggle-row'>
+					<td></td>
+					<td> 
+					{{#each this.video_disc_set}}
+					<div class="media">
+						<div class="media-left">
+							{{#if this.cover_url}}
+							<img class="media-object img-thumbnail" height='140' width='100' src="{{this.cover_url}}" alt='{{this.cover_url}}' >
+							{{else}}
+							<img src='/images/placeholder.png' height='140' width='100' class="img-thumbnail img-responsive">
+							{{/if}}
+						</div>
+						<div class="media-body">
+							<h4 class="media-heading">{{this.title}}</h4>
+							<ul class="list-unstyled">
+								<li><b>GNID</b>: <a href='/video/work/fetch/{{this.gnid}}/rs/0'>{{this.gnid}}</a></li>
+								<li><b>Edition</b>: {{this.edition}}</li>
+								<li><b>Aspect Ratio</b>: {{this.aspect_ratio}}</li>
+								<li><b>External Id's</b> 
+									<ul>
+										{{#each this.xids}}
+											<li>{{this.text}} <font style='color:#999'><small>({{this.source}})</small></font></li>
+										{{/each}}
+									</ul>
+								</li>								
+							</ul>
+						</div>
+					</div>
+					{{/each}} 
+					</td>
+				</tr>								
+				<tr>
+					<td>seasons:</td>
+					{{#if this.season_count}}
+					<td class='toggle-row-link'>{{this.season_count}} Seasons<span class="caret"></span></td>
+					{{else}}
+					<td>No Results</td>
+					{{/if}}
+				</tr>
+				<tr class='toggle-row'>
+					<td></td>
+					<td>
+					<table class='table table-condensed' style='background-color:transparent'>
+						<tr>
+							<td><b>season #</b></td>
+							<td><b>title</b></td>
+							<td><b>gnid</b></td>
+						</tr>
+						{{#each this.seasons}}
+						<tr>
+							<td>{{this.season_num}}</td>
+							<td>{{this.title}}</td>
+							<td><small><a alt = 'Fetch series by gnid' href='/video/season/fetch/{{this.gnid}}/rs/0'>{{this.gnid}}</a></small></td>
+						</tr>
+						{{/each}}
+					</table></td>
+				</tr>
+
+				<tr>
+					<td colspan="2">
+					<div class='show-more-button'>
+						Show More...
+					</div></td>
+				</tr>
+
+				<tr class='toggle-section'>
+					<td>synopsis</td><td>{{this.synopsis}}</td>
+				</tr>
+				<tr class='toggle-section'>
+					<td>original_release</td><td>{{this.date_original_release}}</td>
+				</tr>
+				<tr class='toggle-section'>
+					<td>duration</td><td>{{this.duration_sec}} seconds</td>
+				</tr>
+				<tr class='toggle-section'>
+					<td>production_type:</td>
+					<td>
+					<ul class="list-unstyled" >
+						{{#each this.production_type}}
+						<li>
+							{{this.text}} <font style='color:#999'><small>({{this.id}})</small></font>
+						</li>
+						{{/each}}
+					</ul></td>
+				</tr>
+				<tr class='toggle-section'>
+					<td>audience:</td>
+					<td>
+					<ul class="list-unstyled" >
+						{{#each this.video_audience}}
+						<li>
+							{{this.text}} <font style='color:#999'><small>({{this.id}})</small></font>
+						</li>
+						{{/each}}
+					</ul></td>
+				</tr>
+				<tr class='toggle-section'>
+					<td>setting:</td>
+					<td>
+					<ul class="list-unstyled" >
+						{{#each this.video_setting_environment}}
+						<li>
+							{{this.text}} <font style='color:#999'><small>({{this.id}})</small></font>
+						</li>
+						{{/each}}
+					</ul></td>
+				</tr>
+				<tr class='toggle-section'>
+					<td>time period:</td>
+					<td>
+					<ul class="list-unstyled" >
+						{{#each this.video_setting_period}}
+						<li>
+							{{this.text}} <font style='color:#999'><small>({{this.id}})</small></font>
+						</li>
+						{{/each}}
+					</ul></td>
+				</tr>
+				<tr class='toggle-section'>
+					<td>reputation:</td>
+					<td>
+					<ul class="list-unstyled" >
+						{{#each this.video_reputation}}
+						<li>
+							{{this.text}} <font style='color:#999'><small>({{this.id}})</small></font>
+						</li>
+						{{/each}}
+					</ul></td>
+				</tr>
+				<tr class='toggle-section'>
+					<td>source:</td>
+					<td>
+					<ul class="list-unstyled" >
+						{{#each this.video_source}}
+						<li>
+							{{this.text}} <font style='color:#999'><small>({{this.id}})</small></font>
+						</li>
+						{{/each}}
+					</ul></td>
+				</tr>
+				<tr class='toggle-section'>
+					<td>style:</td>
+					<td>
+					<ul class="list-unstyled" >
+						{{#each this.video_style}}
+						<li>
+							{{this.text}} <font style='color:#999'><small>({{this.id}})</small></font>
+						</li>
+						{{/each}}
+					</ul></td>
+				</tr>
+				<tr class='toggle-section'>
+					<td>story type:</td>
+					<td>
+					<ul class="list-unstyled" >
+						{{#each this.video_story_type}}
+						<li>
+							{{this.text}} <font style='color:#999'><small>({{this.id}})</small></font>
+						</li>
+						{{/each}}
+					</ul></td>
+				</tr>
+				<tr class='toggle-section'>
+					<td>scenario:</td>
+					<td>
+					<ul class="list-unstyled" >
+						{{#each this.video_scenario}}
+						<li>
+							{{this.text}} <font style='color:#999'><small>({{this.id}})</small></font>
+						</li>
+						{{/each}}
+					</ul></td>
+				</tr>
+				<tr class='toggle-section'>
+					<td>mood:</td>
+					<td>
+					<ul class="list-unstyled" >
+						{{#each this.video_mood}}
+						<li>
+							{{this.text}} <font style='color:#999'><small>({{this.id}})</small></font>
+						</li>
+						{{/each}}
+					</ul></td>
+				</tr>
+				<tr class='toggle-section'>
+					<td>genres:</td>
+					<td>
+					<ul class="list-unstyled" >
+						{{#each this.genres}}
+						<li>
+							{{this.text}} <font style='color:#999'><small>({{this.id}})</small></font>
+						</li>
+						{{/each}}
+					</ul></td>
+				</tr>
+				<tr class='toggle-section'>
+					<td>topics:</td>
+					<td>
+					<ul class="list-unstyled" >
+						{{#each this.video_topic}}
+						<li>
+							{{this.text}} <font style='color:#999'><small>({{this.id}})</small></font>
+						</li>
+						{{/each}}
+					</ul></td>
+				</tr>
+				<tr class='toggle-section'>
+					<td>ratings:</td>
+					<td>
+					<ul class="list-unstyled" >
+						{{#each this.ratings}}
+						<li>
+							<b>{{this.rating_system}}</b> - {{this.rating_code}}
+							{{#if this.rating_reason}}
+							- <small><font style='color:#999'>{{this.rating_reason}} </font></small>
+							{{/if}}
+						</li>
+						{{/each}}
+					</ul></td>
+				</tr>
+				<tr class='toggle-section'>
+					<td>external ids:</td>
+					<td>
+					<ul class="list-unstyled" >
+						{{#each this.external_ids}}
+						<li>
+							{{this.text}} <font style='color:#999'><small>({{this.source}})</small></font>
+						</li>
+						{{/each}}
+					</ul></td>
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+</div>
+{{/each}}
+{{/if_cond}}
+
+
+
+{{#if_cond gnResponse.0.obj_type '==' 'CONTRIBUTOR'}}
+{{#each gnResponse}}
+<div class="row result-row">
+	<div class="col-sm-3">
+		{{#if this.contributor_image_url}}
+		<img src="{{this.contributor_image_url}}" alt='{{this.contributor_image_url}}' class="img-thumbnail img-responsive">
+		{{else}}
+		<img src='/images/placeholder.png' alt='No image url in result' class="img-thumbnail img-responsive ">
+		{{/if}}
+	</div>
+	<div class="col-sm-9">
+		<table class="table" id='results-table'>
+			<thead>
+				<tr>
+					<th colspan="2" class='result-head'>{{this.name}} <span style='float:right; color:#999'>{{this.obj_type}}</span></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>contributor_name</td>
+					<td><a title='Search contributor name: {{this.name}}' href='/video/contributor/{{this.name}}/rs/0'>{{this.name}}</a></td>
+				</tr>
+				<tr>
+					<td>contributor_gnid</td><td><a title='Fetch contributor gnid: {{this.gnid}}' href='/video/contributor/fetch/{{this.gnid}}/rs/0'>{{this.gnid}}</a></td>
+				</tr>
+				<tr><td>biography</td><td>{{this.biography}}</td></tr>
+				<tr><td>birth_date</td><td>{{this.birth_date}}</td></tr>
+				<tr><td>birth_place</td><td>{{this.birth_place}}</td></tr>
+				<tr>
+					<td>contributor_type</td>
+					<td>
+						<ul class="list-unstyled" >
+						{{#each this.contributor_type}}
+							<li>{{this.text}} <font style='color:#999'><small>({{this.id}})</small></font></li>
+						{{/each}}
+						</ul>
+					</td>
+				</tr>				
+				<tr>
+					<td colspan="2">Mediagraphy ({{this.mediagraphy_count}})</td>
+				</tr>
+				
+				{{#each this.mediagraphy}}
+				<tr>
+					<td>
+						{{#if this.image_url}}
+						<img src="{{this.image_url}}" alt='{{this.image_url}}' class="img-thumbnail img-responsive">
+						{{else}}
+						<img src='/images/placeholder.png' alt='No image url in result' class="img-thumbnail img-responsive ">
+						{{/if}}
+					</td>
+					<td>
+						<h4>{{this.title}}</h4>
+						<ul class="list-unstyled">
+							<li><b>Type</b>: {{this.type}}</li>
+							<li><b>GNID</b>: <a href='/video/{{this.type}}/fetch/{{this.gnid}}/rs/0'> {{this.gnid}}</a></li>
+							<li><b>Original Release</b>: {{this.date_original_release}}</li>
+							<li><b>Contribution Type</b>: {{this.contribution_type}}</li>
+							<li><b>Character</b>: {{this.contribution_character}}</li>
+						</ul>
+					</td>
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+</div>		
+{{/each}}
+{{/if_cond}}
+
+
